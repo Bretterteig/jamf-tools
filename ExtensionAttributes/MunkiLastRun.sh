@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 # Last time munki has run.
+# Use date type extension attribute
 export TZ="GMT-1"
 
 
