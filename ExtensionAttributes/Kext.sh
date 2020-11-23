@@ -1,13 +1,10 @@
 #!/bin/zsh
-
-# This extension attribute lists all KernalExtension policys. Beware that this only shows user options. 
-# Profile overrides are not displayed here. If profile is applied the shown data can be ignored.
 setopt sh_word_split
 IFS=$'\n'
 
 database_data="$(sqlite3 /var/db/SystemPolicyConfiguration/KextPolicy 'SELECT team_id,bundle_id,allowed FROM "kext_policy"')"
 if [[ -z $database_data ]];then
-    echo "<result>Could not read KextPolicyDB or it is empty</result>"
+    echo "<result>Could not read KextPolicy db or it is empty</result>"
     exit 1
 fi
 
@@ -23,8 +20,8 @@ for line in $database_data;do
         allowed="DENIED"
     fi
 
-    if [[ -n "$(kextstat -lb "$bundleid")" ]];then
-        loaded="ACTIVE"
+    if [[ -n "$(/usr/bin/kmutil showloaded --list-only --bundle-identifier "$bundleid")" ]];then
+        loaded="RUNNING"
     else
         loaded="INACTIVE"
     fi
