@@ -1,0 +1,2 @@
+#!/bin/zsh
+echo "<result>$(/usr/libexec/PlistBuddy -c 'Print :0:_items:0:sppower_battery_health_info:sppower_battery_cycle_count' /dev/stdin <<< $(system_profiler SPPowerDataType -xml) 2>/dev/null)</result>"
