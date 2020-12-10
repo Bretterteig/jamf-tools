@@ -1,7 +1,14 @@
 #!/bin/zsh
 
-# The location where the keyboard layout is saved varies from release to release. Just added both
+# Grab the location key from the builtin keyboard
 
-keyboardLayout="$(/usr/libexec/PlistBuddy -c 'Print :AppleDefaultAsciiInputSource:"KeyboardLayout Name"' /Library/Preferences/com.apple.HIToolbox.plist)"
-[[ -z "$keyboardLayout" ]] && keyboardLayout="$(/usr/libexec/PlistBuddy -c 'Print :AppleSelectedInputSources:0:"KeyboardLayout Name"' /Library/Preferences/com.apple.HIToolbox.plist)"
-echo "<result>$keyboardLayout</result>"
+keyboards="$(ioreg -a -r -k KeyboardLanguage)"
+
+i=0
+while /usr/libexec/PlistBuddy -c "print $i" /dev/stdin <<< $keyboards &>/dev/null;do
+    if "$(/usr/libexec/PlistBuddy -c "print $i:Built-In" /dev/stdin <<< $keyboards)";then
+        echo "<result>$(/usr/libexec/PlistBuddy -c "print $i:KeyboardLanguage" /dev/stdin <<< $keyboards)</result>"
+        exit 0
+    fi
+    i=$(($i+1))
+done
