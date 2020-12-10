@@ -2,6 +2,8 @@
 
 # Last time munki has run.
 # Use date type extension attribute
+
+# Configure the timezone of the output
 export TZ="GMT-1"
 
 
