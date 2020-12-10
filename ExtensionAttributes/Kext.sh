@@ -1,4 +1,6 @@
 #!/bin/zsh
+# This is only compatible with Big Sur. They changed the interfacing binary.
+
 setopt sh_word_split
 IFS=$'\n'
 
