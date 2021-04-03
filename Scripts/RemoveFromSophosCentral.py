@@ -1,4 +1,17 @@
 #!/usr/bin/env python3
+"""
+    All documentations is taken from: https://developer.sophos.com/getting-started-organization
+    
+    This script will delete the device record inside Sophos Central. Careful as there is no confirmation dialog.
+    Python3 is required but its default modules are sufficient.
+
+    Notes:
+    The endpoint client id can be extracted from the com.sophos.mcs preference domain with the key SMEMcsEndpointUUID. 
+    However the id is "encrypted" meaning every two characters are switched up (WHY?!).
+"""
+
+
+
 from ssl import SSLContext
 from sys import argv
 import json, subprocess, urllib.parse, urllib.request
