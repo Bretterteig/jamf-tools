@@ -31,7 +31,7 @@ def decrypt_sophos_id(encrypted_id: str) -> str:
         inverted_sections.append(invert_characters_at_interval(section,2))
     return "-".join(inverted_sections)
 
-def send_request(req: urllib.request) -> dict:
+def send_request(req: urllib.request.Request) -> dict:
     try:
         with urllib.request.urlopen(req, context=ssl_context) as response:
             return json.loads(response.read().decode())
