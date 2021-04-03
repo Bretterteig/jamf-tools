@@ -67,7 +67,7 @@ req = urllib.request.Request(
     }
 )
 tenant = send_request(req)
-if not 'id' in tenant:
+if not 'id' in tenant or tenant['id'] is None:
     print("Could not get tenant information from whoami API")
     exit(1)
 print("Determined tenant id " + tenant['id'])
