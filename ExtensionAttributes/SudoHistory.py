@@ -29,6 +29,7 @@ for event in data:
 unique_events = [dict(s) for s in set(frozenset(d.items()) for d in events)]
 
 # Output
+print('<result>', end='')
 for event in unique_events:
     message = event['user'] + ' (' + event['as_user'] + '): ' + event['command']
     if event['error']:
@@ -36,3 +37,4 @@ for event in unique_events:
     else:
          message = '[OK] ' + message
     print(message)
+print('</result>', end='')
