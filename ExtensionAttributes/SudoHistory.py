@@ -20,8 +20,8 @@ for event in data:
 
     events.append({
         'user': event['eventMessage'].split(':')[0].strip(),
-        'as_user': re.search('USER=[a-zA-Z0-9\_\-]+', event['eventMessage'])[0].lstrip('USER='),
-        'command': re.search('COMMAND=.+', event['eventMessage'])[0].lstrip('COMMAND='),
+        'as_user': re.search('USER=[^\\s]+', event['eventMessage'])[0].lstrip('USER='),
+        'command': re.findall('COMMAND=.*', event['eventMessage'], re.MULTILINE)[0].lstrip('COMMAND='),
         'error': error
     })
 
