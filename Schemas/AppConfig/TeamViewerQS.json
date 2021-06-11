@@ -1,0 +1,11 @@
+{
+  "title": "TeamViewerQS",
+  "description": "Preference Domain: com.teamviewer.TeamViewerQS",
+  "type": "object",
+  "properties": {
+    "TVEULAAccepted": {
+      "title": "Accept EULA",
+      "type": "boolean"
+    }
+  }
+}

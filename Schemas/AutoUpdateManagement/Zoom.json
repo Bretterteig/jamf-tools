@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Zoom",
+  "description": "Preference Domain: us.zoom.config",
+  "type": "object",
+  "properties": {
+    "ZAutoUpdate": {
+      "type": "boolean",
+      "title": "Autoupdate",
+      "default": false
+    }
+  }
+}

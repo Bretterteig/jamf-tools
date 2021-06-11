@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Slack",
+  "description": "Preference Domain: com.tinyspeck.slackmacgap",
+  "type": "object",
+  "properties": {
+    "SlackNoAutoUpdates": {
+      "title": "Disable Auto Update",
+      "type": "boolean",
+      "default": true,
+      "description": "Define wether or not Slack should look for auto updates."
+    }
+  }
+}

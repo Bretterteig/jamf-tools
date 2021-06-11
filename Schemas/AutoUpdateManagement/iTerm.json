@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "iTerm2",
+  "description": "Preference Domain: com.googlecode.iterm2",
+  "options": {
+    "remove_empty_properties": true
+  },
+  "type": "object",
+  "properties": {
+    "SUEnableAutomaticChecks": {
+      "type": "boolean",
+      "title": "Check for updates",
+      "default": false
+    },
+    "SUAutomaticallyUpdate": {
+      "type": "boolean",
+      "title": "Apply updates automatically",
+      "default": false
+    },
+    "SUHasLaunchedBefore": {
+      "type": "boolean",
+      "title": "Has been launched before",
+      "default": true
+    }
+  }
+}

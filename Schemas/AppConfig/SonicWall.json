@@ -1,0 +1,20 @@
+{
+  "title": "com.sonicwall.SonicWALL-Mobile-Connect",
+  "description": "Preference Domain: com.sonicwall.SonicWALL-Mobile-Connect",
+  "type": "object",
+  "properties": {
+    "MC_AutoReconnect": {
+      "title": "Auto reconnect",
+      "type": "boolean"
+    },
+    "MC_UrlControlSetting": {
+      "title": "Allow URL control",
+      "description": "Allow to control SonicWALL via URL schemes (e.g mobileconnect://connect/<ID>)",
+      "type": "boolean"
+    },
+    "MC_ConnectOnLaunch": {
+      "title": "Connect on launch",
+      "type": "boolean"
+    }
+  }
+}

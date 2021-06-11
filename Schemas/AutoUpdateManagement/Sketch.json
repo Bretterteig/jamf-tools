@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Sketch",
+  "description": "Preference Domain: com.bohemiancoding.sketch3",
+  "type": "object",
+  "properties": {
+    "SUEnableAutomaticChecks": {
+      "type": "boolean",
+      "title": "Check for updates",
+      "default": false
+    },
+    "SUAutomaticallyUpdate": {
+      "type": "boolean",
+      "title": "Apply updates automatically",
+      "default": false
+    },
+    "SUHasLaunchedBefore": {
+      "type": "boolean",
+      "title": "Has been launched before",
+      "default": true
+    },
+    "hasShown23Welcome": {
+      "type": "boolean",
+      "description": "Skip welcome dialog",
+      "default": true
+    }
+  }
+}

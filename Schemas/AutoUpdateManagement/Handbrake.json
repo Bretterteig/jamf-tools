@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "title": "Handbrake",
+    "description": "Preference Domain: fr.handbrake.HandBrake",
+    "options": {
+      "remove_empty_properties": true
+    },
+    "type": "object",
+    "properties": {
+      "SUEnableAutomaticChecks": {
+        "type": "boolean",
+        "title": "Check for updates",
+        "default": false
+      },
+      "SUHasLaunchedBefore": {
+        "type": "boolean",
+        "title": "Has been launched before",
+        "default": true
+      }
+    }
+  }

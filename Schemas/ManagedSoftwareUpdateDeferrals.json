@@ -1,0 +1,72 @@
+{
+    "title": "Software Update Deferral Preferences",
+    "description": "Managed Software Update Deferral Preferences (Preference Domain: com.apple.applicationaccess)",
+    "properties": {
+        "forceDelayedSoftwareUpdates": {
+            "title": "Delay software updates",
+            "type": "boolean",
+            "default": false
+        },
+
+        "enforcedSoftwareUpdateDelay": {
+            "title": "Default Software Update delay",
+            "descrption": "This settings is the default deferrel windows for all updates.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 90,
+            "default": 14,
+            "options": {
+                "infoText": "If major and app updates are configured this setting represents minor updates.",
+                "dependencies": {
+                    "forceDelayedSoftwareUpdates": true
+                }
+            }
+        },
+
+        "forceDelayedMajorSoftwareUpdates": {
+            "title": "Use different deferral window for major updates",
+            "type": "boolean",
+            "default": false,
+            "options": {
+                "dependencies": {
+                    "forceDelayedSoftwareUpdates": true
+                }
+            }
+        },
+        "enforcedSoftwareUpdateMajorOSDeferredInstallDelay": {
+            "title": "Major software update delay (days)",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 90,
+            "default": 14,
+            "options": {
+                "dependencies": {
+                    "forceDelayedMajorSoftwareUpdates": true
+                }
+            }
+        },
+
+        "forceDelayedAppSoftwareUpdates": {
+            "title": "Use different deferral window for app updates",
+            "description": "",
+            "type": "boolean",
+            "options": {
+                "dependencies": {
+                    "forceDelayedSoftwareUpdates": true
+                }
+            }
+        },
+        "enforcedSoftwareUpdateNonOSDeferredInstallDelay": {
+            "title": "App software update delay (days)",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 90,
+            "default": 14,
+            "options": {
+                "dependencies": {
+                    "forceDelayedAppSoftwareUpdates": true
+                }
+            }
+        }
+    }
+}

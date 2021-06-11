@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "ownCloud Desktop",
+  "description": "Preference Domain: com.owncloud.desktopclient",
+  "type": "object",
+  "properties": {
+    "skipUpdateCheck": {
+      "type": "boolean",
+      "title": "Skip Updatecheck",
+      "default": true
+    }
+  }
+}

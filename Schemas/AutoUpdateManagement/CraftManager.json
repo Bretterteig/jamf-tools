@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Craftmanager",
+  "description": "Preference Domain: com.invisionlabs.CraftManager",
+  "type": "object",
+  "properties": {
+    "CraftIgnoreUpdates": {
+      "type": "boolean",
+      "title": "Ignore Updates",
+      "default": true
+    }
+  }
+}

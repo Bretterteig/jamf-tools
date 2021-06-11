@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Rectangle",
+  "description": "Preference Domain: com.knollsoft.Rectangle",
+  "type": "object",
+  "properties": {
+    "SUEnableAutomaticChecks": {
+      "type": "boolean",
+      "title": "Check for updates",
+      "default": false
+    },
+    "SUAutomaticallyUpdate": {
+      "type": "boolean",
+      "title": "Apply updates automatically",
+      "default": false
+    }
+  }
+}

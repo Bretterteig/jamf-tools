@@ -1,0 +1,73 @@
+{
+  "title": "SwyxIT",
+  "description": "Preference Domain: com.swyx.Swyx-Desktop",
+  "type": "object",
+  "options": {
+    "remove_empty_properties": true
+  },
+  "properties": {
+    "swyxWareUserId": {
+      "title": "SwyxIT login name",
+      "type": "string",
+      "default": "$FULLNAME"
+    },
+    "RemoteConnectorMode": {
+      "type": "string",
+      "enum": [
+        "Always",
+        "Automatic"
+      ]
+    },
+    "SwyxTenantDomain": {
+      "type": "string"
+    },
+    "swyxWareHostName": {
+      "type": "string"
+    },
+    "SwyxWareServerType": {
+      "type": "string",
+      "enum": [
+        "SwyxWare CPE"
+      ]
+    },
+    "LastFirstNameOrder": {
+      "title": "Display name in LAST- FIRSTNAME order",
+      "type": "boolean"
+    },
+    "Logging Enabled": {
+      "type": "boolean"
+    },
+    "RememberPassword": {
+      "title": "Remember password",
+      "type": "boolean"
+    },
+    "SyncCalendarShowInfo": {
+      "type": "boolean"
+    },
+    "SyncStatusFromLocalCalendar": {
+      "type": "boolean"
+    },
+    "UserActivitySyncStatus": {
+      "title": "Automatically switch away status",
+      "type": "boolean"
+    },
+    "UserActivityTimeoutMin": {
+      "title": "Minutes until status switches to away",
+      "type": "integer",
+      "enum": [
+        1,
+        2,
+        5,
+        20,
+        30,
+        60
+      ]
+    },
+    "AllowAppAnalytics": {
+      "type": "boolean"
+    },
+    "ExecuteUserScripts": {
+      "type": "boolean"
+    }
+  }
+}

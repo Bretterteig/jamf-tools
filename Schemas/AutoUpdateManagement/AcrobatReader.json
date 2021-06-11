@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Acrobat Reader",
+  "description": "Preference Domain: com.adobe.Reader",
+  "type": "object",
+  "properties": {
+    "DC": {
+      "type": "object",
+      "description": "This describes the product for which the policy shall apply.",
+      "properties": {
+        "FeatureLockDown": {
+          "type": "object",
+          "description": "Features that should not be locked.",
+          "properties": {
+            "bUpdater": {
+              "type": "boolean",
+              "title": "Auto Update",
+              "default": true
+            }
+          }
+        }
+      }
+    }
+  }
+}
