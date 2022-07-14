@@ -1,6 +1,7 @@
 {
   "title": "com.microsoft.OneDrive (Standalone) or com.microsoft.OneDrive-mac (Mac App Store)",
   "description": "Preference Domain: com.microsoft.OneDrive (Standalone) or com.microsoft.OneDrive-mac (Mac App Store), Application: Microsoft OneDrive",
+  "__feedback": "bill@talkingmoose.net",
   "properties": {
     "AllowTenantList": {
       "title": "Allowed Tenants List",
@@ -466,6 +467,21 @@
         {
           "rel": "More information",
           "href": "https://techcommunity.microsoft.com/t5/microsoft-onedrive-blog/apple-silicon-support-in-ga-and-kfm-for-macos-in-public-preview/ba-p/3215671"
+        }
+      ]
+    },
+    "EnableSyncAdminReports": {
+      "title": "Enable sync report",
+      "default": true,
+      "description": "Wether or not sync report should be sent to tenant dashboard",
+      "type": "boolean",
+      "options": {
+        "infoText": "Key: EnableSyncAdminReports"
+      },
+      "links": [
+        {
+          "rel": "More information",
+          "href": "https://techcommunity.microsoft.com/t5/microsoft-onedrive-blog/calling-macos-admins-onedrive-sync-reports-are-in-public-preview/ba-p/3279661"
         }
       ]
     }
