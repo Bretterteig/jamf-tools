@@ -1,0 +1,420 @@
+{
+    "title": "Hello-IT",
+    "description": "Preference Domain: com.github.ygini.Hello-IT",
+    "options": {
+        "remove_empty_properties": true
+    },
+    "type": "object",
+    "properties": {
+        "functionIdentifier": {
+            "title": "Base menu",
+            "$ref": "#/definitions/functionIdentifier",
+            "enum": [
+                "public.submenu"
+            ]
+        },
+        "loglevel":{
+            "type": "integer",
+            "enum": [0,1,2,3,4,5,6,7],
+            "options": {
+                "enum_titles":["Emergency","Alert","Critical","Error","Warning","Notice","Info","Debug"]
+            }
+        },
+        "settings": {
+            "title": "Base menu settings",
+            "required": true,
+            "$ref": "#/definitions/public.submenu"
+        }
+    },
+    "defaultProperties": [
+        "functionIdentifier",
+        "settings"
+    ],
+    "additionalProperties": false,
+    "definitions": {
+        "public.separator": {
+            "title": "Separator",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.separator"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "properties": {
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        }
+                    }
+                }
+            },
+            "defaultProperties": [
+                "functionIdentifier"
+            ],
+            "additionalProperties": false
+        },
+        "public.title": {
+            "title": "Title",
+            "type": "object",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.title"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                        "title": {
+                            "$ref": "#/definitions/title"
+                        },
+                        "computedTitle": {
+                            "$ref": "#/definitions/computedTitle"
+                        },
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        }
+                    },
+                    "defaultProperties": [
+                        "title"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "public.script.item": {
+            "title": "Script",
+            "type": "object",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.script.item"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                        "title": {
+                            "$ref": "#/definitions/title"
+                        },
+                        "computedTitle": {
+                            "$ref": "#/definitions/computedTitle"
+                        },
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        },
+                        "script": {},
+                        "path": {},
+                        "repeat": {},
+                        "network":{}
+                    },
+                    "defaultProperties": [
+                        "title"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "public.quit": {
+            "title": "Quit",
+            "type": "object",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.quit"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                        "title": {
+                            "$ref": "#/definitions/title"
+                        },
+                        "computedTitle": {
+                            "$ref": "#/definitions/computedTitle"
+                        },
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        }
+                    },
+                    "defaultProperties": [
+                        "title",
+                        "optionalDisplay"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "public.open.application": {
+            "title": "Application",
+            "type": "object",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.open.application"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                        "title": {
+                            "$ref": "#/definitions/title"
+                        },
+                        "computedTitle": {
+                            "$ref": "#/definitions/computedTitle"
+                        },
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        },
+                        "hideIfNotAvailable": {
+                            "$ref": "#/definitions/hideIfNotAvailable"
+                        },
+                        "app": {
+                            "$ref": "#/definitions/app"
+                        },
+                        "file": {
+                            "$ref": "#/definitions/file"
+                        },
+                        "appURL": {
+                            "$ref": "#/definitions/appURL"
+                        },
+                        "args": {
+                            "$ref": "#/definitions/args"
+                        }
+                    },
+                    "defaultProperties": [
+                        "title",
+                        "hideIfNotAvailable",
+                        "app"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "public.open.resource": {
+            "title": "Resource",
+            "type": "object",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.open.resource"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                        "title": {
+                            "$ref": "#/definitions/title"
+                        },
+                        "computedTitle": {
+                            "$ref": "#/definitions/computedTitle"
+                        },
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        },
+                        "URL": {
+                            "$ref": "#/definitions/URL"
+                        }
+                    },
+                    "defaultProperties": [
+                        "title"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "public.command": {
+            "title": "Command",
+            "type": "object",
+            "properties": {
+                "functionIdentifier": {
+                    "$ref": "#/definitions/functionIdentifier",
+                    "enum": [
+                        "public.command"
+                    ]
+                },
+                "settings": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                        "title": {
+                            "$ref": "#/definitions/title"
+                        },
+                        "computedTitle": {
+                            "$ref": "#/definitions/computedTitle"
+                        },
+                        "optionalDisplay": {
+                            "$ref": "#/definitions/optionalDisplay"
+                        },
+                        "ProgramArguments": {
+                            "$ref": "#/definitions/args"
+                        }
+                    },
+                    "defaultProperties": [
+                        "title"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "public.submenu": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "$ref": "#/definitions/title"
+                },
+                "computedTitle": {
+                    "$ref": "#/definitions/computedTitle"
+                },
+                "optionalDisplay": {
+                    "$ref": "#/definitions/optionalDisplay"
+                },
+                "stateSortScenario": {
+                    "$ref": "#/definitions/stateSortScenario"
+                },
+                "content": {
+                    "title": "Menu items",
+                    "description": "An array of sub functions this menu contains. To see reference for all functions check out",
+                    "links": [
+                        {
+                            "rel": "Functions",
+                            "href": "https://github.com/ygini/Hello-IT/wiki/Functions"
+                        }
+                    ],
+                    "required": true,
+                    "type": "array",
+                    "items": {
+                        "title": "Menu item",
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/public.separator"
+                            },
+                            {
+                                "$ref": "#/definitions/public.title"
+                            },
+                            {
+                                "title": "Sub menu",
+                                "$ref": "#/definitions/public.submenu"
+                            },
+                            {
+                                "$ref": "#/definitions/public.open.application"
+                            },
+                            {
+                                "$ref": "#/definitions/public.open.resource"
+                            },
+                            {
+                                "$ref": "#/definitions/public.command"
+                            },
+                            {
+                                "$ref": "#/definitions/public.quit"
+                            }
+                        ]
+                    }
+                }
+            },
+            "defaultProperties": [
+                "functionIdentifier",
+                "title",
+                "content"
+            ],
+            "additionalProperties": false
+        },
+        "functionIdentifier": {
+            "type": "string",
+            "options": {
+                "hidden": true
+            },
+            "required": true
+        },
+        "title": {
+            "title": "Text Title",
+            "description": "Defines the title of the menu item. Defaults to English if current system language was not found in defined locales. See also:",
+            "links": [
+                {
+                    "rel": "Label translation",
+                    "href": "https://github.com/ygini/Hello-IT/wiki/Label-translation"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "en": {
+                    "title": "Default (English)",
+                    "type": "string",
+                    "required": true
+                }
+            }
+        },
+        "computedTitle": {
+            "title": "Script Title",
+            "description": "Runs script to retrieve the title of the item",
+            "type": "string"
+        },
+        "hideIfNotAvailable": {
+            "title": "Automatic Hide",
+            "description": "Hides this option if the given item is not available.",
+            "type": "boolean"
+        },
+        "app": {
+            "title": "Application Name",
+            "description": "Name of the application on disk without .app (TextEdit for example)",
+            "type": "string"
+        },
+        "URL": {
+            "description": "Target's URL to open",
+            "type": "string",
+            "required": true
+        },
+        "file": {
+            "title": "File to open with app",
+            "description": "Full path of a file you want to open with the application (~ supported)",
+            "type": "string"
+        },
+        "appURL": {
+            "title": "Application absolut path",
+            "description": "Full path of a file you want to open with the application (~ supported)",
+            "type": "string"
+        },
+        "args": {
+            "title": "Application arguments",
+            "type": "array",
+            "items": [
+                {
+                    "title": "Argument",
+                    "type": "string"
+                }
+            ]
+        },
+        "optionalDisplay": {
+            "title": "Optional",
+            "description": "Define wether or not this item should only be shown if the option key has been pressed",
+            "type": "boolean"
+        },
+        "stateSortScenario": {
+            "title": "Sorting behaviour",
+            "description": "Define if what state is considered higher in the sorting order",
+            "type": "integer",
+            "enum": [
+                0,
+                1
+            ],
+            "options": {
+                "enum_titles": [
+                    "Unavailable",
+                    "OK"
+                ]
+            }
+        }
+    }
+}
