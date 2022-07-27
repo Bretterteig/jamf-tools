@@ -13,6 +13,7 @@ apiPass="$8"
 jamfAttribute="$9"
 
 # (opt) If specified the value above will be considered encrypted. Encryption used in this script is AES256
+# Encryption based on https://github.com/brysontyrrell/EncryptedStrings
 encSalt="${10}"
 encKey="${11}"
 
@@ -56,7 +57,7 @@ function authenticate() {
 }
 
 function decrypt_string() {
-    echo "${1}" | /usr/bin/openssl enc -aes256 -d -a -A -S "${encSalt}" -k "${encKey}"
+    echo "${1}" | /usr/bin/openssl enc -aes256 -md md5 -d -a -A -S "${encSalt}" -k "${encKey}"
 }
 
 
@@ -81,8 +82,9 @@ fi
 
 # Get the LAPS password
 if [[ -n $jamfAttribute ]];then
-	udid=$(/usr/sbin/system_profiler SPHardwareDataType | /usr/bin/awk '/Hardware UUID:/ { print $3 }')
-	jamfPassword=$(/usr/bin/curl -s -f -u "$apiUser":"$apiPass" -H "Accept: application/xml" "$(defaults read /Library/Preferences/com.jamfsoftware.jamf.plist jss_url)JSSResource/computers/udid/$udid/subset/extension_attributes" | xmllint --xpath "//extension_attribute[name=\"$jamfAttribute\"]//value/text()" - 2>/dev/null)
+    bearer="$(/usr/bin/curl -X POST -s -u "${apiUser}:${apiPass}" "${apiURL}/api/v1/auth/token" | /usr/bin/plutil -extract token raw -)"
+	udid="$(/usr/sbin/system_profiler SPHardwareDataType | /usr/bin/awk '/Hardware UUID:/ { print $3 }')"
+	jamfPassword="$(/usr/bin/curl -s -f -H "Authorization: Bearer ${bearer}" -H "Accept: application/xml" "$(defaults read /Library/Preferences/com.jamfsoftware.jamf.plist jss_url)JSSResource/computers/udid/$udid/subset/extension_attributes" | xmllint --xpath "//extension_attribute[name=\"$jamfAttribute\"]//value/text()" - 2>/dev/null)"
     if [[ -n $jamfPassword ]];then 
         echo "Retrival of password from JAMF successful."
         authenticate "$newUser" "$jamfPassword" && newUserPassword="$jamfPassword"
