@@ -1,7 +1,4 @@
 #!/bin/zsh
-# This is a highly modified version of https://github.com/NU-ITS/LAPSforMac
-# It is therefor also licensed under the MIT License
-
 apiUser="$4"
 apiPass="$5"
 extAttName="$6"
@@ -10,7 +7,7 @@ startPassword="$8"
 salt="$9"
 encryptPass="${10}"
 
-apiURL="$(defaults read /Library/Preferences/com.jamfsoftware.jamf.plist jss_url)JSSResource"
+apiURL="$(/usr/bin/defaults read /Library/Preferences/com.jamfsoftware.jamf.plist jss_url)"
 LogLocation="/var/log/jamf.log"
 
 # Logging Function for reporting actions
@@ -22,7 +19,7 @@ function ScriptLogging() {
 }
 
 function DecryptString() {
-    echo "${1}" | /usr/bin/openssl enc -aes256 -d -a -A -S "${2}" -k "${3}"
+    echo "${1}" | /usr/bin/openssl enc -aes256 -d -md md5 -a -A -S "${2}" -k "${3}"
 }
 
 
@@ -55,7 +52,7 @@ if [[ "$extAttName" == "" ]]; then
     exit 1
 fi
 
-if ! dseditgroup -o checkmember -m "$resetUser" localaccounts &>/dev/null; then
+if ! /usr/sbin/dseditgroup -o checkmember -m "$resetUser" localaccounts &>/dev/null; then
     ScriptLogging "Error: $checkUser is not a local user on the Computer!"
     ScriptLogging "======== Aborting LAPS Update ========"
     exit 1
@@ -64,12 +61,18 @@ fi
 apiPass="$(DecryptString "$apiPass" "$salt" "$encryptPass")"
 startPassword="$(DecryptString "$startPassword" "$salt" "$encryptPass")"
 
+bearerToken=$(/usr/bin/curl -X POST -s -u "${apiUser}:${apiPass}" ${apiURL}/api/v1/auth/token | /usr/bin/plutil -extract token raw -)
+if [[ -z $bearerToken ]];then
+    echo "Could not acquire bearer token."
+    exit 1
+fi
+
 ScriptLogging "Parameters Verified."
 
 # Gather further information
 ScriptLogging "Getting LAPS info."
 udid=$(/usr/sbin/system_profiler SPHardwareDataType | /usr/bin/awk '/Hardware UUID:/ { print $3 }')
-oldPass=$(curl -s -f -u "$apiUser":"$apiPass" -H "Accept: application/xml" "$apiURL/computers/udid/$udid/subset/extension_attributes" | xmllint --xpath "//extension_attribute[name=\"$extAttName\"]//value/text()" - 2>/dev/null)
+oldPass=$(/usr/bin/curl -s -f --max-time 30 -H "Authorization: Bearer ${bearerToken}" -H "Accept: application/xml" "${apiURL}JSSResource/computers/udid/$udid/subset/extension_attributes" | xmllint --xpath "//extension_attribute[name=\"$extAttName\"]//value/text()" - 2>/dev/null)
 
 
 words=($(grep -x '.\{4,7\}' /usr/share/dict/words))
@@ -103,7 +106,7 @@ else
     ScriptLogging "Error: Password stored is not valid for $resetUser."
     if [[ "$oldPass" != "$startPassword" ]];then
         ScriptLogging "Trying start password as an alternative."
-        if ! dscl /Local/Default -authonly "$resetUser" "$startPassword" &>/dev/null; then
+        if ! /usr/bin/dscl /Local/Default -authonly "$resetUser" "$startPassword" &>/dev/null; then
             ScriptLogging "Could not determine admin user password."
             ScriptLogging "======== Aborting LAPS Update ========"
             exit 1
@@ -121,7 +124,7 @@ fi
 ScriptLogging "Updating password for $resetUser."
 /usr/local/bin/jamf changePassword -username $resetUser -oldPassword "$oldPass" -password "$newPass"
 ScriptLogging "Verifying new password for $resetUser."
-if dscl /Local/Default -authonly "$resetUser" "$newPass" &>/dev/null; then
+if /usr/bin/dscl /Local/Default -authonly "$resetUser" "$newPass" &>/dev/null; then
     ScriptLogging "New password for $resetUser is verified."
 else
     ScriptLogging "Error: Password reset for $resetUser was not successful!"
@@ -131,21 +134,21 @@ fi
 
 # Send updated password to JAMF
 ScriptLogging "Uploading new password for $resetUser."
-curl -s -u "${apiUser}:${apiPass}" -X PUT -H "Content-Type: text/xml" -d "${xmlString}" "${apiURL}/computers/udid/$udid" 1>/dev/null
+/usr/bin/curl -s -f --max-time 30 -H "Authorization: Bearer ${bearerToken}" -X PUT -H "Content-Type: text/xml" -d "${xmlString}" "${apiURL}JSSResource/computers/udid/$udid" 1>/dev/null
 sleep 3
-LAPSpass=$(curl -s -f -u "$apiUser":"$apiPass" -H "Accept: application/xml" "$apiURL/computers/udid/$udid/subset/extension_attributes" | xmllint --xpath "//extension_attribute[name=\"$extAttName\"]//value/text()" - 2>/dev/null)
+LAPSpass=$(/usr/bin/curl -s -f --max-time 30 -H "Authorization: Bearer ${bearerToken}" -H "Accept: application/xml" "${apiURL}JSSResource/computers/udid/$udid/subset/extension_attributes" | xmllint --xpath "//extension_attribute[name=\"$extAttName\"]//value/text()" - 2>/dev/null)
 
 ScriptLogging "Verifying LAPS password for $resetUser."
-if dscl /Local/Default -authonly "$resetUser" "$LAPSpass" &>/dev/null; then
+if /usr/bin/dscl /Local/Default -authonly "$resetUser" "$LAPSpass" &>/dev/null; then
     ScriptLogging "LAPS password for $resetUser is verified."
 else
     ScriptLogging "Error: LAPS password for $resetUser is not correct!"
     if [[ -n "$startPassword" ]];then
         ScriptLogging "Resetting to starting password."
-        jamf changePassword -username $resetUser -oldPassword "$newPass" -password "$startPassword"
+        /usr/local/bin/jamf changePassword -username $resetUser -oldPassword "$newPass" -password "$startPassword"
     fi
     ScriptLogging "======== LAPS Update Password failed. Warning! ========"
-    exit 0
+    exit 1
 fi
 
 ScriptLogging "======== LAPS Update Finished ========"
