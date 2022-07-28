@@ -38,16 +38,6 @@ function get_password() {
 EOF
 }
 
-function parse_xml_friendly() {
-    input="$1"
-    output=${input//&/&amp;}
-    output=${output//</&lt;}
-    output=${output//>/&gt;}
-    output=${output//\"/&quot;}
-    output=${output//\'/&apos;}
-    echo "$output"
-}
-
 function display_error() {
     launchctl asuser $(id -u $currentUser) osascript -e "display dialog \"$1\" with icon stop buttons {\"OK\"} default button \"OK\" giving up after 120"
 }
@@ -115,32 +105,12 @@ if ! authenticate "$currentUser" "$currentUserPassword";then
     exit 1
 fi
 
-
-# Add to FileVault
-/usr/bin/fdesetup add -inputplist -verbose <<EOF
-<plist>
-    <dict>
-        <key>Username</key>
-        <string>$(parse_xml_friendly "$currentUser")</string>
-        <key>Password</key>
-        <string>$(parse_xml_friendly "$currentUserPassword")</string>
-        <key>AdditionalUsers</key>
-        <array>
-            <dict>
-                <key>Username</key>
-                <string>$(parse_xml_friendly "$newUser")</string>
-                <key>Password</key>
-                <string>$(parse_xml_friendly "$newUserPassword")</string>
-            </dict>
-        </array>
-    </dict>
-</plist>
-EOF
-
-
 # Renew SecureToken just in case
-/usr/sbin/sysadminctl -secureTokenOn "$newUser" -password "$newUserPassword" -adminUser "$currentUser" -adminPassword "$currentUserPassword"
+printf '%s\n' "${currentUserPassword}" "${newUserPassword}" | /usr/sbin/sysadminctl -secureTokenOn "$newUser" -password - -adminUser "$currentUser" -adminPassword -
 
 if ! /usr/sbin/sysadminctl -secureTokenStatus "$newUser" 2>&1 | grep -q ENABLED && /usr/bin/fdesetup list | grep -q "${usertoadd}";then
 	display_error "Something did went wrong while enabling $newUser for FileVault."
 fi
+
+# Make sure it shows up on the login screen
+/usr/sbin/diskutil apfs updatePreboot / 1>/dev/null
