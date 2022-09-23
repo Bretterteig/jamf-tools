@@ -1,0 +1,18 @@
+{
+    "title": "GlobalProtect client",
+    "description": "Preference domain: com.paloaltonetworks.GlobalProtect.client",
+    "properties": {
+        "PanPortalList": {
+            "title": "Portals",
+            "description": "A list of portals that should be pre defined in the GlobalConnect client",
+            "type": "array",
+            "items":{
+                "type": "string",
+                "title": "URL"
+            }
+        },
+        "Username":{
+            "type": "string"
+        }
+    }
+}
